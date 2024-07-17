@@ -1,8 +1,7 @@
 import os
 import subprocess
-from typing import List
 
-from PyQt5.QtCore import Qt, QTimer, pyqtSignal, QObject, QEvent
+from PyQt5.QtCore import QEvent, QObject, Qt, QTimer, pyqtSignal
 from PyQt5.QtGui import QCloseEvent, QIcon, QKeyEvent
 from PyQt5.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
                              QLineEdit, QListWidget, QListWidgetItem,
@@ -12,7 +11,7 @@ from cfg import Cfg
 
 
 class MyApp(QApplication):
-    def __init__(self, argv: List[str]) -> None:
+    def __init__(self, argv: list[str]) -> None:
         super().__init__(argv)
 
         if not os.path.exists("lib"): 
@@ -25,6 +24,7 @@ class MyApp(QApplication):
             for i in self.topLevelWidgets():
                 i.show()
         return super().eventFilter(a0, a1)
+
 
 class SafeWidget(QWidget):
     on_text_changed = pyqtSignal(str)
@@ -68,6 +68,13 @@ class SafeWidget(QWidget):
 
         if text:
             self.input_widget.setText(text)
+
+        else:
+            self.input_widget.setStyleSheet("padding-left: 5px; background-color: #3b590d;")
+            QTimer.singleShot(500, lambda: self.remove_temp(self.input_widget))
+
+    def remove_temp(self, widget: QFrame):
+        widget.setStyleSheet("padding-left: 5px;")
 
     def on_text_changed_cmd(self, txt: str):
         self.on_text_changed.emit(txt)
