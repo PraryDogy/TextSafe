@@ -34,10 +34,12 @@ class SafeWidget(QWidget):
         super().__init__(parent=parent)
 
         self.v_layout = QVBoxLayout()
-        self.v_layout.setContentsMargins(5, 15, 5, 15)
+        self.v_layout.setContentsMargins(5, 0, 5, 5)
+        self.v_layout.setSpacing(0)
         self.setLayout(self.v_layout)
 
         h_wid = QWidget()
+        # h_wid.setFixedHeight(32)
         self.v_layout.addWidget(h_wid)
 
         h_layout = QHBoxLayout()
@@ -54,18 +56,20 @@ class SafeWidget(QWidget):
         self.copy_btn = QPushButton(parent=self, text="Копировать")
         self.copy_btn.setFixedWidth(130)
         self.copy_btn.clicked.connect(lambda: self.copy_text(self.input_widget.text()))
-        h_layout.addWidget(self.copy_btn)
+        h_layout.addWidget(self.copy_btn, alignment=Qt.AlignmentFlag.AlignVCenter)
 
         self.remove_btn = QPushButton(parent=self, text="Удалить")
         self.remove_btn.setFixedWidth(130)
         self.remove_btn.clicked.connect(self.remove_cmd)
         self.v_layout.addWidget(self.remove_btn, alignment=Qt.AlignmentFlag.AlignCenter)
 
+        self.v_layout.addSpacerItem(QSpacerItem(0, 10))
+
         sep = QFrame(parent=self)
         sep.setStyleSheet("background-color: black;")
         sep.setFixedHeight(1)
         self.v_layout.addWidget(sep)
-
+        
         if text:
             self.input_widget.setText(text)
 
