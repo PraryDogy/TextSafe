@@ -3,7 +3,7 @@ import os
 
 class Cfg:
     app_name = "TextSafe"
-    app_ver = "1.0.0"
+    app_ver = "1.1.0"
 
     app_support = os.path.join(
         os.path.expanduser("~"),
